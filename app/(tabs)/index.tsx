@@ -33,29 +33,10 @@ const MapsPage = () => {
     getLocationPermission()
   }, [])
 
-  console.log('zustand address ---> ', address)
-  const persons = extendedClient.person.useFindMany()
-  if (persons.length === 0)
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>MapsPage</Text>
-        <Button
-          title="To FormPage"
-          onPress={() => router.navigate('/formPage')}
-        />
-      </View>
-    )
-  console.log(persons)
+  // console.log('zustand address ---> ', address)
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>
-        {persons.map((person) => (
-          <View key={person.id}>
-            <Text>{person.name}</Text>
-          </View>
-        ))}
-      </Text>
       <Button
         title="To FormPage"
         onPress={() => router.navigate('/formPage')}

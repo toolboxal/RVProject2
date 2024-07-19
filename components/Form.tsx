@@ -46,8 +46,8 @@ const Form = () => {
       remarks: '',
     },
   })
-  console.log('private-->', isPrivate)
-  console.log('type -->', category)
+  // console.log('private-->', isPrivate)
+  // console.log('type -->', category)
 
   const showToast = (name: string) => {
     Toast.show(`Record for ${name} has been created 👍`, {
@@ -129,7 +129,7 @@ const Form = () => {
                 onChangeText={onChange}
                 onBlur={onBlur}
                 label={`${!isPrivate ? 'unit' : 'house no.'}`}
-                placeholderText="blk no."
+                placeholderText="house no."
                 extraStyles={{ width: 110 }}
               />
             )}

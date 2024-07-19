@@ -66,17 +66,17 @@ const styles = StyleSheet.create({
   radioButton: {
     padding: 9,
     paddingHorizontal: 14,
-    borderColor: Colors.gray600,
+    borderColor: Colors.emerald900,
     borderWidth: 1,
     borderRadius: 20,
   },
   labelText: {
     fontFamily: 'IBM-Medium',
     fontSize: 16,
-    color: Colors.gray600,
+    color: Colors.emerald900,
   },
   active: {
-    backgroundColor: Colors.gray600,
+    backgroundColor: Colors.emerald900,
     color: Colors.white,
   },
 })

@@ -11,11 +11,12 @@ SplashScreen.preventAutoHideAsync()
 const RootLayout = () => {
   const [loaded, error] = useFonts({
     ' SpaceMono': require('../assets/fonts/SpaceMono-Regular.ttf'),
-    'IBM-Light': require('../assets/fonts/IBMPlexSans-Light.ttf'),
-    'IBM-LightItalic': require('../assets/fonts/IBMPlexSans-LightItalic.ttf'),
+    'IBM-Italic': require('../assets/fonts/IBMPlexSans-Italic.ttf'),
     'IBM-Regular': require('../assets/fonts/IBMPlexSans-Regular.ttf'),
     'IBM-Medium': require('../assets/fonts/IBMPlexSans-Medium.ttf'),
+    'IBM-MediumItalic': require('../assets/fonts/IBMPlexSans-MediumItalic.ttf'),
     'IBM-SemiBold': require('../assets/fonts/IBMPlexSans-SemiBold.ttf'),
+    'IBM-SemiBoldItalic': require('../assets/fonts/IBMPlexSans-SemiBoldItalic.ttf'),
     'IBM-Bold': require('../assets/fonts/IBMPlexSans-Bold.ttf'),
   })
   const [isLoading, setIsLoading] = useState(false)
