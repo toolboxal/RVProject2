@@ -29,11 +29,14 @@ const Form = () => {
   const address = useMyStore((state) => state.address)
   const { todayDate } = getTimeDate()
 
-  const { control, handleSubmit, setValue } = useForm({
+  const { street, streetNumber } = address
+  const displayBlock = streetNumber?.split(' ')[1]
+
+  const { control, handleSubmit } = useForm({
     defaultValues: {
-      block: '',
+      block: displayBlock || '',
       unit: '',
-      street: '',
+      street: street || '',
       name: '',
       contact: '',
       date: todayDate,
@@ -43,30 +46,18 @@ const Form = () => {
   console.log('private-->', isPrivate)
   console.log('type -->', category)
 
-  const { isoCountryCode, street, streetNumber } = address
-  const displayBlock = streetNumber?.split(' ')[1]
-  if (!isPrivate && isoCountryCode === 'SG') {
-    setValue('block', displayBlock as string)
-    setValue('unit', '')
-    setValue('street', street ?? '')
-  } else if (isPrivate && isoCountryCode === 'SG') {
-    setValue('block', '')
-    setValue('unit', displayBlock || (streetNumber ?? ''))
-    setValue('street', street ?? '')
-  }
-
   const submitPressed = (data: TFormData) => {
     console.log('pressed')
-    const toUpperBlock = data.block.toUpperCase()
-    const fullData = {
-      ...data,
-      category,
-      block: toUpperBlock,
-      private: isPrivate,
-      latitude: geoCoords.latitude,
-      longitude: geoCoords.longitude,
-    }
-    console.log('full data to submit -->', fullData)
+    // const toUpperBlock = data.block.toUpperCase()
+    // const fullData = {
+    //   ...data,
+    //   category,
+    //   block: toUpperBlock,
+    //   private: isPrivate,
+    //   latitude: geoCoords.latitude,
+    //   longitude: geoCoords.longitude,
+    // }
+    // console.log('full data to submit -->', fullData)
   }
 
   const handleSetPrivate = () => {
