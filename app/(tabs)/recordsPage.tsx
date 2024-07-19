@@ -11,15 +11,17 @@ import { router } from 'expo-router'
 import { Colors } from '@/constants/Colors'
 import { defaultStyles } from '@/constants/Styles'
 import ApartmentRadioButtons from '@/components/ApartmentRadioButton'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Person } from '@prisma/client/react-native'
 import { FlashList } from '@shopify/flash-list'
 import SingleRecord from '@/components/SingleRecord'
+import BottomSheet from '@gorhom/bottom-sheet'
 
 const RecordsPage = () => {
   const [isPrivate, setIsPrivate] = useState(false)
 
   const persons = extendedClient.person.useFindMany()
+  const snapPoints = useMemo(() => ['15%', '50%'], [])
 
   const handleSetPrivate = () => {
     setIsPrivate(!isPrivate)
@@ -119,6 +121,11 @@ const RecordsPage = () => {
           estimatedItemSize={50}
         />
       </View>
+      <BottomSheet snapPoints={snapPoints}>
+        <View>
+          <Text>This is the bottom sheet</Text>
+        </View>
+      </BottomSheet>
     </SafeAreaView>
   )
 }

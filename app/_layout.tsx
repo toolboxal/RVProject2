@@ -5,6 +5,7 @@ import { initializeDb } from '@/myDBModule'
 import { Text } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { RootSiblingParent } from 'react-native-root-siblings'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -48,34 +49,36 @@ const RootLayout = () => {
   }
 
   return (
-    <RootSiblingParent>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen
-          name="formPage"
-          options={{
-            presentation: 'card',
-            // gestureEnabled: false,
-            headerShown: true,
-            headerTitle: 'Create New Record',
-            headerTitleStyle: {
-              fontFamily: 'IBM-Regular',
-              color: Colors.primary600,
-              fontSize: 22,
-            },
-            headerBackTitle: 'Back',
-            headerBackTitleStyle: {
-              fontFamily: 'Roboto-Regular',
-              fontSize: 18,
-            },
-            headerStyle: {
-              backgroundColor: Colors.primary50,
-            },
-            headerTintColor: Colors.primary600,
-          }}
-        />
-      </Stack>
-    </RootSiblingParent>
+    <GestureHandlerRootView>
+      <RootSiblingParent>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="formPage"
+            options={{
+              presentation: 'card',
+              // gestureEnabled: false,
+              headerShown: true,
+              headerTitle: 'Create New Record',
+              headerTitleStyle: {
+                fontFamily: 'IBM-Regular',
+                color: Colors.primary600,
+                fontSize: 22,
+              },
+              headerBackTitle: 'Back',
+              headerBackTitleStyle: {
+                fontFamily: 'Roboto-Regular',
+                fontSize: 18,
+              },
+              headerStyle: {
+                backgroundColor: Colors.primary50,
+              },
+              headerTintColor: Colors.primary600,
+            }}
+          />
+        </Stack>
+      </RootSiblingParent>
+    </GestureHandlerRootView>
   )
 }
 
