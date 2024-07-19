@@ -45,10 +45,17 @@ const MapsPage = () => {
         />
       </View>
     )
+  console.log(persons)
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>{persons[0].name}</Text>
+      <Text>
+        {persons.map((person) => (
+          <View key={person.id}>
+            <Text>{person.name}</Text>
+          </View>
+        ))}
+      </Text>
       <Button
         title="To FormPage"
         onPress={() => router.navigate('/formPage')}

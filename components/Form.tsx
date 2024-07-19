@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native'
+import { router } from 'expo-router'
 import { useForm, Controller } from 'react-hook-form'
 import { Colors } from '@/constants/Colors'
 import ApartmentRadioButtons from './ApartmentRadioButton'
@@ -16,6 +17,8 @@ import useMyStore from '@/store/store'
 import getTimeDate from '../utils/getTimeDate'
 import { Person } from '@prisma/client/react-native'
 import CustomRadioButtons from './CustomRadioButton'
+import { extendedClient } from '@/myDBModule'
+import Toast from 'react-native-root-toast'
 
 type TFormData = Omit<
   Person,
@@ -32,7 +35,7 @@ const Form = () => {
   const { street, streetNumber } = address
   const displayBlock = streetNumber?.split(' ')[1]
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       block: displayBlock || '',
       unit: '',
@@ -46,18 +49,37 @@ const Form = () => {
   console.log('private-->', isPrivate)
   console.log('type -->', category)
 
-  const submitPressed = (data: TFormData) => {
+  const showToast = (name: string) => {
+    Toast.show(`Record for ${name} has been created 👍`, {
+      duration: 5000,
+      position: 60,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+      backgroundColor: Colors.emerald100,
+      textColor: Colors.primary900,
+      opacity: 1,
+    })
+  }
+
+  const submitPressed = async (data: TFormData) => {
     console.log('pressed')
-    // const toUpperBlock = data.block.toUpperCase()
-    // const fullData = {
-    //   ...data,
-    //   category,
-    //   block: toUpperBlock,
-    //   private: isPrivate,
-    //   latitude: geoCoords.latitude,
-    //   longitude: geoCoords.longitude,
-    // }
-    // console.log('full data to submit -->', fullData)
+    const toUpperBlock = data.block.toUpperCase()
+    await extendedClient.person.create({
+      data: {
+        ...data,
+        category: category,
+        block: isPrivate ? '' : toUpperBlock,
+        private: isPrivate,
+        latitude: geoCoords.latitude,
+        longitude: geoCoords.longitude,
+      },
+    })
+    console.log('submitted new user')
+    reset()
+    showToast(data.name)
+    router.navigate('/(tabs)/recordsPage')
   }
 
   const handleSetPrivate = () => {

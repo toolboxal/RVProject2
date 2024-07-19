@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { initializeDb } from '@/myDBModule'
 import { Text } from 'react-native'
 import { Colors } from '@/constants/Colors'
+import { RootSiblingParent } from 'react-native-root-siblings'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -46,32 +47,34 @@ const RootLayout = () => {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" />
-      <Stack.Screen
-        name="formPage"
-        options={{
-          presentation: 'card',
-          // gestureEnabled: false,
-          headerShown: true,
-          headerTitle: 'Create New Record',
-          headerTitleStyle: {
-            fontFamily: 'IBM-Regular',
-            color: Colors.primary600,
-            fontSize: 22,
-          },
-          headerBackTitle: 'Back',
-          headerBackTitleStyle: {
-            fontFamily: 'Roboto-Regular',
-            fontSize: 18,
-          },
-          headerStyle: {
-            backgroundColor: Colors.primary50,
-          },
-          headerTintColor: Colors.primary600,
-        }}
-      />
-    </Stack>
+    <RootSiblingParent>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="formPage"
+          options={{
+            presentation: 'card',
+            // gestureEnabled: false,
+            headerShown: true,
+            headerTitle: 'Create New Record',
+            headerTitleStyle: {
+              fontFamily: 'IBM-Regular',
+              color: Colors.primary600,
+              fontSize: 22,
+            },
+            headerBackTitle: 'Back',
+            headerBackTitleStyle: {
+              fontFamily: 'Roboto-Regular',
+              fontSize: 18,
+            },
+            headerStyle: {
+              backgroundColor: Colors.primary50,
+            },
+            headerTintColor: Colors.primary600,
+          }}
+        />
+      </Stack>
+    </RootSiblingParent>
   )
 }
 
