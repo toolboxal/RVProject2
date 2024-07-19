@@ -1,0 +1,26 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["reactNative"]
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = "file:./app.db"
+}
+
+// Your data model
+
+model Person {
+    id        Int     @id @default(autoincrement())
+    name      String
+    block     String
+    unit      String
+    street    String
+    contact   String
+    remarks   String
+    date      String
+    private   Boolean
+    category  String
+    longitude Float
+    latitude  Float
+}

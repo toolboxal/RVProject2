@@ -1,70 +1,59 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { useEffect, useState } from 'react'
+import { View, Text, Button } from 'react-native'
+import * as Location from 'expo-location'
+import { router } from 'expo-router'
+import useMyStore from '@/store/store'
+import { extendedClient } from '@/myDBModule'
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const MapsPage = () => {
+  const setAddress = useMyStore((state) => state.setAddress)
+  const address = useMyStore((state) => state.address)
+  const setGeoCoords = useMyStore((state) => state.setGeoCoords)
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+  useEffect(() => {
+    const getLocationPermission = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied')
+        return
+      }
+
+      let { coords } = await Location.getCurrentPositionAsync({ accuracy: 3 })
+      const { latitude, longitude } = coords
+
+      const getAddress = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      })
+
+      setGeoCoords({ latitude, longitude })
+
+      setAddress(getAddress[0])
+    }
+    getLocationPermission()
+  }, [])
+
+  console.log('zustand address ---> ', address)
+  const persons = extendedClient.person.useFindMany()
+  if (persons.length === 0)
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>MapsPage</Text>
+        <Button
+          title="To FormPage"
+          onPress={() => router.navigate('/formPage')}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
-}
+      </View>
+    )
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>{persons[0].name}</Text>
+      <Button
+        title="To FormPage"
+        onPress={() => router.navigate('/formPage')}
+      />
+    </View>
+  )
+}
+export default MapsPage
