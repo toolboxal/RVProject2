@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, StatusBar, SafeAreaView } from 'react-native'
 import * as Location from 'expo-location'
 import { router } from 'expo-router'
 import useMyStore from '@/store/store'
 import { extendedClient } from '@/myDBModule'
+
+import WebMapRender from '@/components/WebMapRender'
+import { Colors } from '@/constants/Colors'
 
 const MapsPage = () => {
   const setAddress = useMyStore((state) => state.setAddress)
@@ -36,12 +39,17 @@ const MapsPage = () => {
   // console.log('zustand address ---> ', address)
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button
-        title="To FormPage"
-        onPress={() => router.navigate('/formPage')}
-      />
-    </View>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: Colors.primary700,
+      }}
+    >
+      <StatusBar barStyle={'light-content'} />
+
+      <WebMapRender />
+      {/* <View style={{ backgroundColor: 'green', flex: 1 }}></View> */}
+    </SafeAreaView>
   )
 }
 export default MapsPage

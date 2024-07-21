@@ -50,7 +50,7 @@ const Form = () => {
   // console.log('type -->', category)
 
   const showToast = (name: string) => {
-    Toast.show(`Record for ${name} has been created 👍`, {
+    Toast.show(`Record ${name} has been created 👍`, {
       duration: 5000,
       position: 60,
       shadow: true,
@@ -222,7 +222,7 @@ const Form = () => {
           activeOpacity={0.8}
         >
           <FontAwesome name="check" size={22} color={Colors.white} />
-          <Text style={styles.buttonText}>Create</Text>
+          <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

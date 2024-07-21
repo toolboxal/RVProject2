@@ -78,7 +78,7 @@ const RootLayout = () => {
                 headerTintColor: Colors.primary600,
               }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="editPage"
               options={{
                 presentation: 'card',
@@ -100,7 +100,7 @@ const RootLayout = () => {
                 },
                 headerTintColor: Colors.primary600,
               }}
-            />
+            /> */}
           </Stack>
         </RootSiblingParent>
       </ActionSheetProvider>

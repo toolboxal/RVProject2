@@ -1,8 +1,7 @@
-import { Tabs } from 'expo-router'
+import { router, Tabs } from 'expo-router'
 import { Colors } from '@/constants/Colors'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Text, View } from 'react-native'
+import { MaterialIcons } from '@expo/vector-icons'
 
 const TabsLayout = () => {
   return (
@@ -23,6 +22,30 @@ const TabsLayout = () => {
               size={30}
               name="map-marked-alt"
               color={`${focused ? Colors.emerald500 : Colors.primary500}`}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="editPage"
+        options={{
+          title: 'EditPage',
+          href: null,
+          headerTitle: 'Edit Record',
+
+          headerShown: true,
+          headerTitleStyle: {
+            fontFamily: 'IBM-Regular',
+            color: Colors.primary600,
+            fontSize: 22,
+          },
+          headerLeft: () => (
+            <MaterialIcons
+              name="arrow-back"
+              size={28}
+              color="black"
+              style={{ paddingLeft: 10 }}
+              onPress={() => router.navigate('/(tabs)/recordsPage')}
             />
           ),
         }}

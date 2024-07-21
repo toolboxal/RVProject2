@@ -7,7 +7,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
-  KeyboardAvoidingView,
 } from 'react-native'
 import { extendedClient } from '@/myDBModule'
 import { router } from 'expo-router'
@@ -23,6 +22,7 @@ import useMyStore from '@/store/store'
 import { useActionSheet } from '@expo/react-native-action-sheet'
 import FontAwesome from '@expo/vector-icons/FontAwesome6'
 import { Ionicons } from '@expo/vector-icons'
+import Toast from 'react-native-root-toast'
 
 const RecordsPage = () => {
   const [isPrivate, setIsPrivate] = useState(false)
@@ -53,6 +53,20 @@ const RecordsPage = () => {
     }
   }
 
+  const showToast = (name?: string) => {
+    Toast.show(`Record has been deleted 🔥`, {
+      duration: 5000,
+      position: 60,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+      backgroundColor: Colors.rose200,
+      textColor: Colors.primary900,
+      opacity: 1,
+    })
+  }
+
   const handleDeleteAlert = (personId: number) => {
     Alert.alert('Record will be deleted', 'Ok to proceed?', [
       {
@@ -62,6 +76,7 @@ const RecordsPage = () => {
             where: { id: personId },
           })
           handleOpenBtmSheet('close')
+          showToast()
           console.log('confirm delete')
         },
         style: 'destructive',
@@ -95,7 +110,7 @@ const RecordsPage = () => {
             break
           case 2:
             console.log('to edit', personId)
-            router.navigate('/editPage')
+            router.navigate('/(tabs)/editPage')
             break
           case cancelButtonIndex:
             console.log('canceled', personId)
@@ -149,13 +164,51 @@ const RecordsPage = () => {
 
   if (persons.length === 0)
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>MapsPage</Text>
-        <Button
-          title="To FormPage"
-          onPress={() => router.navigate('/formPage')}
-        />
-      </View>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: Colors.primary50,
+        }}
+      >
+        <StatusBar barStyle={'dark-content'} />
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Records</Text>
+          <TouchableOpacity
+            style={styles.addBtn}
+            onPress={() => router.navigate('/formPage')}
+          >
+            <Ionicons
+              name="create-outline"
+              size={20}
+              color={Colors.emerald900}
+            />
+            <Text
+              style={{
+                fontFamily: 'IBM-Bold',
+                fontSize: 16,
+                color: Colors.emerald900,
+              }}
+            >
+              Create
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text
+            style={{
+              fontFamily: 'IBM-SemiBold',
+              fontSize: 22,
+              color: Colors.primary300,
+            }}
+          >
+            No Records
+          </Text>
+        </View>
+      </SafeAreaView>
     )
   // console.log(persons)
 
@@ -184,7 +237,7 @@ const RecordsPage = () => {
               color: Colors.emerald900,
             }}
           >
-            CREATE
+            Create
           </Text>
         </TouchableOpacity>
       </View>
@@ -205,6 +258,7 @@ const RecordsPage = () => {
         </View>
 
         <FlashList
+          contentContainerStyle={{ paddingBottom: 100 }}
           data={flatMapped}
           renderItem={({ item }) => {
             if (typeof item === 'string') {

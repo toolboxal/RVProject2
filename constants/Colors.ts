@@ -38,4 +38,11 @@ export const Colors = {
   sky800: '#075985',
   sky900: '#0c4a6e',
   sky950: '#082f49',
+  rose50: '#fff1f2',
+  rose100: '#ffe4e6',
+  rose200: '#fecdd3',
+  rose300: '#fda4af',
+  rose400: '#fb7185',
+  rose500: '#f43f5e',
+  rose600: '#e11d48',
 }

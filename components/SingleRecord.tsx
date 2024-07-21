@@ -44,7 +44,10 @@ const SingleRecord = (prop: TProps) => {
           right: 5,
           padding: 10,
         }}
-        onPress={() => handleActionSheet(id)}
+        onPress={() => {
+          setSelectedPerson(item)
+          handleActionSheet(id)
+        }}
       >
         <FontAwesome
           name="ellipsis-vertical"
