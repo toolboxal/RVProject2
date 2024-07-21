@@ -6,6 +6,7 @@ import { Text } from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { RootSiblingParent } from 'react-native-root-siblings'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -50,34 +51,59 @@ const RootLayout = () => {
 
   return (
     <GestureHandlerRootView>
-      <RootSiblingParent>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen
-            name="formPage"
-            options={{
-              presentation: 'card',
-              // gestureEnabled: false,
-              headerShown: true,
-              headerTitle: 'Create New Record',
-              headerTitleStyle: {
-                fontFamily: 'IBM-Regular',
-                color: Colors.primary600,
-                fontSize: 22,
-              },
-              headerBackTitle: 'Back',
-              headerBackTitleStyle: {
-                fontFamily: 'Roboto-Regular',
-                fontSize: 18,
-              },
-              headerStyle: {
-                backgroundColor: Colors.primary50,
-              },
-              headerTintColor: Colors.primary600,
-            }}
-          />
-        </Stack>
-      </RootSiblingParent>
+      <ActionSheetProvider>
+        <RootSiblingParent>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen
+              name="formPage"
+              options={{
+                presentation: 'card',
+                // gestureEnabled: false,
+                headerShown: true,
+                headerTitle: 'Create New Record',
+                headerTitleStyle: {
+                  fontFamily: 'IBM-Regular',
+                  color: Colors.primary600,
+                  fontSize: 22,
+                },
+                headerBackTitle: 'Back',
+                headerBackTitleStyle: {
+                  fontFamily: 'Roboto-Regular',
+                  fontSize: 18,
+                },
+                headerStyle: {
+                  backgroundColor: Colors.primary50,
+                },
+                headerTintColor: Colors.primary600,
+              }}
+            />
+            <Stack.Screen
+              name="editPage"
+              options={{
+                presentation: 'card',
+                // gestureEnabled: false,
+                headerShown: true,
+                headerTitle: 'Edit Record',
+                headerTitleStyle: {
+                  fontFamily: 'IBM-Regular',
+                  color: Colors.primary600,
+                  fontSize: 22,
+                },
+                headerBackTitle: 'Back',
+                headerBackTitleStyle: {
+                  fontFamily: 'Roboto-Regular',
+                  fontSize: 18,
+                },
+                headerStyle: {
+                  backgroundColor: Colors.primary50,
+                },
+                headerTintColor: Colors.primary600,
+              }}
+            />
+          </Stack>
+        </RootSiblingParent>
+      </ActionSheetProvider>
     </GestureHandlerRootView>
   )
 }

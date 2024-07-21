@@ -94,7 +94,9 @@ const Form = () => {
       }}
     >
       <View style={styles.apartmentBtnsContainer}>
-        <Text style={defaultStyles.textH2}>Choose type of residence</Text>
+        <Text style={[defaultStyles.textH2, { color: Colors.primary900 }]}>
+          Choose type of residence
+        </Text>
         <ApartmentRadioButtons
           isPrivate={isPrivate}
           handleSetPrivate={handleSetPrivate}

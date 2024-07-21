@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: 16,
-    fontFamily: 'IBM-Medium',
+    fontFamily: 'IBM-Bold',
     color: Colors.primary900,
   },
   active: {
