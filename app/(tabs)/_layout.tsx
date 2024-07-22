@@ -9,8 +9,8 @@ const TabsLayout = () => {
       screenOptions={{
         headerShown: false,
         unmountOnBlur: true,
-        tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: Colors.primary700, paddingTop: 15 },
+        // tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: Colors.primary700, height: 90 },
       }}
     >
       <Tabs.Screen
@@ -19,11 +19,12 @@ const TabsLayout = () => {
           title: 'Map',
           tabBarIcon: ({ focused }) => (
             <FontAwesome5
-              size={30}
+              size={25}
               name="map-marked-alt"
               color={`${focused ? Colors.emerald500 : Colors.primary500}`}
             />
           ),
+          tabBarActiveTintColor: Colors.emerald500,
         }}
       />
       <Tabs.Screen
@@ -32,7 +33,6 @@ const TabsLayout = () => {
           title: 'EditPage',
           href: null,
           headerTitle: 'Edit Record',
-
           headerShown: true,
           headerTitleStyle: {
             fontFamily: 'IBM-Regular',
@@ -44,7 +44,7 @@ const TabsLayout = () => {
               name="arrow-back"
               size={28}
               color="black"
-              style={{ paddingLeft: 10 }}
+              style={{ paddingHorizontal: 10 }}
               onPress={() => router.navigate('/(tabs)/recordsPage')}
             />
           ),
@@ -57,11 +57,12 @@ const TabsLayout = () => {
           title: 'Records',
           tabBarIcon: ({ focused }) => (
             <FontAwesome5
-              size={35}
+              size={30}
               name="folder-open"
               color={`${focused ? Colors.emerald500 : Colors.primary500}`}
             />
           ),
+          tabBarActiveTintColor: Colors.emerald500,
         }}
       />
     </Tabs>

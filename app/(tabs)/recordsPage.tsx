@@ -23,12 +23,13 @@ import { useActionSheet } from '@expo/react-native-action-sheet'
 import FontAwesome from '@expo/vector-icons/FontAwesome6'
 import { Ionicons } from '@expo/vector-icons'
 import Toast from 'react-native-root-toast'
+import sharePerson from '@/utils/sharePerson'
 
 const RecordsPage = () => {
   const [isPrivate, setIsPrivate] = useState(false)
   const selectedPerson = useMyStore((state) => state.selectedPerson)
 
-  const snapPoints = useMemo(() => ['10%', '40%'], [])
+  const snapPoints = useMemo(() => ['10%', '45%'], [])
   const bottomSheetRef = useRef<BottomSheet>(null)
 
   const persons = extendedClient.person.useFindMany()
@@ -102,18 +103,19 @@ const RecordsPage = () => {
       (selectedIndex: number | undefined) => {
         switch (selectedIndex) {
           case destructiveButtonIndex:
-            console.log('deleted', personId)
+            // console.log('deleted', personId)
             handleDeleteAlert(personId)
             break
           case 1:
-            console.log('to share', personId)
+            // console.log('to share', personId)
+            sharePerson(personId)
             break
           case 2:
-            console.log('to edit', personId)
+            // console.log('to edit', personId)
             router.navigate('/(tabs)/editPage')
             break
           case cancelButtonIndex:
-            console.log('canceled', personId)
+          // console.log('canceled', personId)
         }
       }
     )
@@ -412,7 +414,7 @@ const styles = StyleSheet.create({
   },
   apartmentBtnsContainer: {
     paddingHorizontal: 20,
-    paddingVertical: 18,
+    paddingVertical: 15,
     gap: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
