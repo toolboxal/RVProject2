@@ -24,9 +24,11 @@ import FontAwesome from '@expo/vector-icons/FontAwesome6'
 import { Ionicons } from '@expo/vector-icons'
 import Toast from 'react-native-root-toast'
 import sharePerson from '@/utils/sharePerson'
+import DropdownMenu from '@/components/DropdownMenu'
 
 const RecordsPage = () => {
   const [isPrivate, setIsPrivate] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const selectedPerson = useMyStore((state) => state.selectedPerson)
 
   const snapPoints = useMemo(() => ['10%', '45%'], [])
@@ -115,7 +117,7 @@ const RecordsPage = () => {
             router.navigate('/(tabs)/editPage')
             break
           case cancelButtonIndex:
-          // console.log('canceled', personId)
+            console.log('canceled', personId)
         }
       }
     )
@@ -123,6 +125,10 @@ const RecordsPage = () => {
 
   const handleActionSheet = (personId: number) => {
     actionSheetPressed(personId)
+  }
+
+  const handleMenuOpen = () => {
+    setMenuOpen(!menuOpen)
   }
 
   // --------data formatting----------
@@ -226,7 +232,6 @@ const RecordsPage = () => {
       <StatusBar barStyle={'dark-content'} />
 
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Records</Text>
         <TouchableOpacity
           style={styles.addBtn}
           onPress={() => router.navigate('/formPage')}
@@ -242,6 +247,15 @@ const RecordsPage = () => {
             Create
           </Text>
         </TouchableOpacity>
+        <Text style={styles.headerText}>Records</Text>
+        <TouchableOpacity
+          style={styles.burgerContainer}
+          onPress={() => setMenuOpen(!menuOpen)}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="menu" size={30} color={Colors.primary100} />
+        </TouchableOpacity>
+        {menuOpen && <DropdownMenu handleMenuOpen={handleMenuOpen} />}
       </View>
 
       <View
@@ -395,6 +409,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
     backgroundColor: Colors.primary50,
+    position: 'relative',
+    zIndex: 2,
   },
   headerText: {
     fontFamily: 'IBM-Bold',
@@ -481,5 +497,14 @@ const styles = StyleSheet.create({
     fontFamily: 'IBM-Regular',
     fontSize: 18,
     color: Colors.primary100,
+  },
+  burgerContainer: {
+    width: 40,
+    height: 40,
+    backgroundColor: Colors.primary900,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 25,
   },
 })
