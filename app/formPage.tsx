@@ -1,6 +1,10 @@
 import Form from '@/components/Form'
 import { Colors } from '@/constants/Colors'
 import { extendedClient } from '@/myDBModule'
+import useMyStore from '@/store/store'
+import getCurrentLocation from '@/utils/getCurrentLoc'
+import { useFocusEffect } from 'expo-router'
+import { useCallback, useEffect } from 'react'
 import {
   View,
   Text,
@@ -12,36 +16,19 @@ import {
 } from 'react-native'
 
 const FormPage = () => {
-  // const user = extendedClient.person.useFindFirst({
-  //   where: {
-  //     id: 1,
-  //   },
-  // })
-  // console.log('users --> ', user)
-  // const createUser = () => {
-  //   const newUser = {
-  //     name: 'User1',
-  //     block: '123',
-  //     unit: '88-372',
-  //     street: 'Paradise Ave5',
-  //     remarks: 'testing purpose',
-  //     date: '22/07/24',
-  //     contact: '73936040',
-  //     category: 'RV',
-  //     geocoords: 'geotest',
-  //     private: false,
-  //   }
-  //   extendedClient.person.create({
-  //     data: newUser,
-  //   })
-  //   console.log('createUser clicked')
-  // }
+  const setGeoCoords = useMyStore((state) => state.setGeoCoords)
+  const setAddress = useMyStore((state) => state.setAddress)
+
+  useEffect(() => {
+    const getGeo = async () => {
+      const { latitude, longitude, getAddress } = await getCurrentLocation()
+      setGeoCoords({ latitude, longitude })
+      setAddress(getAddress[0])
+    }
+    getGeo()
+  }, [])
 
   return (
-    // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    //   <Text>FormPage</Text>
-    //   <Button title="Create New User" onPress={createUser} />
-    // </View>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{

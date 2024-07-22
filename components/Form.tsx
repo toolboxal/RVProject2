@@ -9,16 +9,18 @@ import { router } from 'expo-router'
 import { useForm, Controller } from 'react-hook-form'
 import { Colors } from '@/constants/Colors'
 import ApartmentRadioButtons from './ApartmentRadioButton'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { defaultStyles } from '@/constants/Styles'
 import TextInputComponent from './TextInputComponent'
 import FontAwesome from '@expo/vector-icons/FontAwesome6'
+import { FontAwesome5 } from '@expo/vector-icons'
 import useMyStore from '@/store/store'
 import getTimeDate from '../utils/getTimeDate'
 import { Person } from '@prisma/client/react-native'
 import CustomRadioButtons from './CustomRadioButton'
 import { extendedClient } from '@/myDBModule'
 import Toast from 'react-native-root-toast'
+import getCurrentLocation from '@/utils/getCurrentLoc'
 
 type TFormData = Omit<
   Person,
@@ -30,19 +32,26 @@ const Form = () => {
   const [category, setCategory] = useState('CA')
   const geoCoords = useMyStore((state) => state.geoCoords)
   const address = useMyStore((state) => state.address)
+
   const { todayDate } = getTimeDate()
 
   const { street, streetNumber } = address
   const displayBlock = streetNumber?.split(' ')[1]
 
-  const { control, handleSubmit, reset } = useForm({
+  useEffect(() => {
+    setValue('block', displayBlock || '')
+    setValue('street', street || '')
+    setValue('date', todayDate)
+  }, [address])
+
+  const { control, handleSubmit, reset, setValue } = useForm({
     defaultValues: {
-      block: displayBlock || '',
+      block: '',
       unit: '',
-      street: street || '',
+      street: '',
       name: '',
       contact: '',
-      date: todayDate,
+      date: '',
       remarks: '',
     },
   })

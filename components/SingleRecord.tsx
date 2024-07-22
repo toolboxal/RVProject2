@@ -1,13 +1,7 @@
 import { Colors } from '@/constants/Colors'
 import useMyStore from '@/store/store'
 import { Person } from '@prisma/client/react-native'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Pressable,
-} from 'react-native'
+import { Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native'
 import FontAwesome from '@expo/vector-icons/FontAwesome6'
 
 type TProps = {
