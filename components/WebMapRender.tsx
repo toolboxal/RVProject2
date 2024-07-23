@@ -1,7 +1,12 @@
 import { WebView } from 'react-native-webview'
 import useMyStore from '@/store/store'
 import { extendedClient } from '@/myDBModule'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { Colors } from '@/constants/Colors'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
@@ -16,19 +21,36 @@ const WebMapRender = () => {
   const { latitude, longitude } = geoCoords
   const webRef = useRef<WebView>(null)
 
-  console.log('webMap rerender!!!')
+  // console.log('webMap rerender!!!')
 
   const persons = extendedClient.person.useFindMany()
 
   const markers = persons?.map((person) => {
-    const { name, block, unit, category, latitude, longitude } = person
+    const {
+      name,
+      block,
+      unit,
+      street,
+      category,
+      latitude,
+      longitude,
+      private: isPrivate,
+    } = person
 
-    const popUpContent = `<h3 style='color:#065f46;font-size:15px;line-height:0.1; display:inline-block;padding:0;margin:0'>${name}</h3>
+    const publicResident = `<h3 style='color:#065f46;font-size:15px;line-height:0.1; display:inline-block;padding:0;margin:0'>${name}</h3>
     <p style='color:#065f46;font-size:14px;font-weight:bold; display:inline-block;padding:0;margin:0' >| ${category}</p>
     <hr>
     <p style='color:#065f46;font-size:15px;font-weight:bold; display:inline-block;padding:0;margin:0;line-height:0.5' >Blk${block}</p>
     <p style='color:#065f46;font-size:15px;font-style:italic; display:inline-block;padding:0;margin:0;line-height:0.5'>#${unit}</p>
     `
+    const privateResidence = `<h3 style='color:#065f46;font-size:15px;line-height:0.1; display:inline-block;padding:0;margin:0'>${name}</h3>
+    <p style='color:#065f46;font-size:14px;font-weight:bold; display:inline-block;padding:0;margin:0' >| ${category}</p>
+    <hr>
+    <p style='color:#065f46;font-size:15px;font-style:italic; display:inline-block;padding:0;margin:0;line-height:0.5'>${unit}</p>
+    <p style='color:#065f46;font-size:15px;font-style:italic; display:inline-block;padding:0;margin:0;line-height:0.5'>${street}</p>
+    `
+
+    const popUpContent = isPrivate ? privateResidence : publicResident
 
     return { popUpContent, latitude, longitude }
   })
@@ -146,6 +168,16 @@ const WebMapRender = () => {
         originWhitelist={['*']}
         source={{ html: htmlContent }}
         ref={webRef}
+        startInLoadingState
+        renderLoading={() => (
+          <View style={{ height: '100%' }}>
+            <ActivityIndicator
+              size={'large'}
+              color={Colors.emerald500}
+              style={{ height: '100%' }}
+            />
+          </View>
+        )}
       />
       <View style={{ position: 'absolute', bottom: 40, right: 15, gap: 15 }}>
         <TouchableOpacity

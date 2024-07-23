@@ -187,7 +187,9 @@ const RecordsPage = () => {
             style={styles.addBtn}
             onPress={() => {
               router.navigate('/formPage')
-              setMenuOpen(!menuOpen)
+              if (menuOpen === true) {
+                setMenuOpen(false)
+              }
             }}
           >
             <Ionicons
@@ -253,7 +255,9 @@ const RecordsPage = () => {
           style={styles.addBtn}
           onPress={() => {
             router.navigate('/formPage')
-            setMenuOpen(!menuOpen)
+            if (menuOpen === true) {
+              setMenuOpen(false)
+            }
           }}
         >
           <Ionicons name="create-outline" size={20} color={Colors.emerald900} />

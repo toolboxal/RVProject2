@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RVProject2",
-    "slug": "RVProject2",
+    "name": "RVPal",
+    "slug": "RVPal",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,7 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.anonymous.RVProject2"
     },
     "android": {
@@ -24,6 +24,19 @@
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "compatibleScreens": [
+        {
+          "screenSize": ["small", "normal", "large"],
+          "screenDensity": [
+            "ldpi",
+            "mdpi",
+            "hdpi",
+            "xhdpi",
+            "xxhdpi",
+            "xxxhdpi"
+          ]
+        }
       ]
     },
     "web": {
