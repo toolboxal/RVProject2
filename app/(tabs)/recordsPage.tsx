@@ -170,6 +170,7 @@ const RecordsPage = () => {
     .filter((item) => item !== null) as number[]
   // --------end of data formatting----------
 
+  // JSX when there no existing records
   if (persons.length === 0)
     return (
       <SafeAreaView
@@ -182,10 +183,12 @@ const RecordsPage = () => {
       >
         <StatusBar barStyle={'dark-content'} />
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Records</Text>
           <TouchableOpacity
             style={styles.addBtn}
-            onPress={() => router.navigate('/formPage')}
+            onPress={() => {
+              router.navigate('/formPage')
+              setMenuOpen(!menuOpen)
+            }}
           >
             <Ionicons
               name="create-outline"
@@ -202,6 +205,20 @@ const RecordsPage = () => {
               Create
             </Text>
           </TouchableOpacity>
+          <Text style={styles.headerText}>Records</Text>
+          <TouchableOpacity
+            style={styles.burgerContainer}
+            onPress={() => setMenuOpen(!menuOpen)}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="menu" size={30} color={Colors.primary100} />
+          </TouchableOpacity>
+          {menuOpen && (
+            <DropdownMenu
+              handleMenuOpen={handleMenuOpen}
+              existingRecords={false}
+            />
+          )}
         </View>
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
@@ -218,8 +235,8 @@ const RecordsPage = () => {
         </View>
       </SafeAreaView>
     )
-  // console.log(persons)
 
+  // JSX when there are records
   return (
     <SafeAreaView
       style={{
@@ -234,7 +251,10 @@ const RecordsPage = () => {
       <View style={styles.headerContainer}>
         <TouchableOpacity
           style={styles.addBtn}
-          onPress={() => router.navigate('/formPage')}
+          onPress={() => {
+            router.navigate('/formPage')
+            setMenuOpen(!menuOpen)
+          }}
         >
           <Ionicons name="create-outline" size={20} color={Colors.emerald900} />
           <Text
@@ -255,7 +275,12 @@ const RecordsPage = () => {
         >
           <Ionicons name="menu" size={30} color={Colors.primary100} />
         </TouchableOpacity>
-        {menuOpen && <DropdownMenu handleMenuOpen={handleMenuOpen} />}
+        {menuOpen && (
+          <DropdownMenu
+            handleMenuOpen={handleMenuOpen}
+            existingRecords={true}
+          />
+        )}
       </View>
 
       <View

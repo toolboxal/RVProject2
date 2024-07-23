@@ -1,12 +1,22 @@
 import { WebView } from 'react-native-webview'
 import useMyStore from '@/store/store'
-import Constants from 'expo-constants'
-
 import { extendedClient } from '@/myDBModule'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Colors } from '@/constants/Colors'
+import { FontAwesome6 } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
+import { router } from 'expo-router'
+import getCurrentLocation from '@/utils/getCurrentLoc'
+import { useRef } from 'react'
 
 const WebMapRender = () => {
+  const setAddress = useMyStore((state) => state.setAddress)
+  const setGeoCoords = useMyStore((state) => state.setGeoCoords)
   const geoCoords = useMyStore((state) => state.geoCoords)
   const { latitude, longitude } = geoCoords
+  const webRef = useRef<WebView>(null)
+
+  console.log('webMap rerender!!!')
 
   const persons = extendedClient.person.useFindMany()
 
@@ -96,12 +106,82 @@ const WebMapRender = () => {
               markersGroup.addLayer(mark)
             })
             map.addLayer(markersGroup)
+
+            function refocusMap(latitude, longitude) {
+            map.setView([latitude, longitude], 18);
+            }
+
+            window.addEventListener('message', function(event) {
+            var data = JSON.parse(event.data);
+            if (data.type === 'REFOCUS') {
+                refocusMap(data.lat, data.lng);
+            }
+            });
+
             
         })();
     </script>
 </body>
 </html>
   `
-  return <WebView style={{ height: '100%' }} source={{ html: htmlContent }} />
+
+  const handleRefreshNavigation = async () => {
+    const { latitude, longitude, getAddress } = await getCurrentLocation()
+    setGeoCoords({ latitude, longitude })
+    setAddress(getAddress[0])
+    if (webRef.current) {
+      webRef.current.postMessage(
+        JSON.stringify({
+          type: 'REFOCUS',
+          lat: latitude,
+          lng: longitude,
+        })
+      )
+    }
+  }
+  return (
+    <View style={{ position: 'relative', flex: 1 }}>
+      <WebView
+        style={{ height: '100%' }}
+        originWhitelist={['*']}
+        source={{ html: htmlContent }}
+        ref={webRef}
+      />
+      <View style={{ position: 'absolute', bottom: 40, right: 15, gap: 15 }}>
+        <TouchableOpacity
+          style={styles.addBtn}
+          onPress={handleRefreshNavigation}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="navigate" size={26} color={Colors.primary50} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.addBtn}
+          onPress={() => router.navigate('/formPage')}
+          activeOpacity={0.8}
+        >
+          <FontAwesome6 name="add" size={26} color={Colors.primary50} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
 }
 export default WebMapRender
+
+const styles = StyleSheet.create({
+  addBtn: {
+    width: 50,
+    height: 50,
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary900,
+    padding: 10,
+    borderRadius: 50,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+})

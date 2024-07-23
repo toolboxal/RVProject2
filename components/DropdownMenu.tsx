@@ -3,24 +3,47 @@ import { Ionicons } from '@expo/vector-icons'
 import { Colors } from '@/constants/Colors'
 import { router } from 'expo-router'
 import uploadRecord from '@/utils/uploadRecord'
+import createBackup from '@/utils/createBackup'
+import restoreRecord from '@/utils/restoreBackup'
 
 type TDropdownMenuProps = {
   handleMenuOpen: () => void
+  existingRecords: boolean
 }
 
-const DropdownMenu = ({ handleMenuOpen }: TDropdownMenuProps) => {
+const DropdownMenu = ({
+  handleMenuOpen,
+  existingRecords,
+}: TDropdownMenuProps) => {
   const handleUpload = async () => {
     console.log('pressed handle')
     await uploadRecord()
   }
 
+  const handleBackUp = async () => {
+    await createBackup()
+  }
+  const handleRestore = async () => {
+    await restoreRecord()
+  }
+
   return (
     <View style={styles.dropdownContainer}>
-      <TouchableOpacity style={styles.optionBox} activeOpacity={0.9}>
-        <Text style={styles.optionText}>Create backup</Text>
-      </TouchableOpacity>
+      {existingRecords && (
+        <TouchableOpacity
+          style={styles.optionBox}
+          activeOpacity={0.9}
+          onPress={() => handleBackUp()}
+        >
+          <Text style={styles.optionText}>Create backup</Text>
+        </TouchableOpacity>
+      )}
       <View style={styles.divider}></View>
-      <TouchableOpacity style={styles.optionBox} activeOpacity={0.9}>
+      <TouchableOpacity
+        style={styles.optionBox}
+        activeOpacity={0.9}
+        onPress={() => handleRestore()}
+      >
         <Text style={styles.optionText}>Restore backup</Text>
       </TouchableOpacity>
       <View style={styles.divider}></View>
