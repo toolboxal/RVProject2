@@ -78,13 +78,13 @@ const RootLayout = () => {
                 headerTintColor: Colors.primary600,
               }}
             />
-            {/* <Stack.Screen
-              name="editPage"
+            <Stack.Screen
+              name="readmePage"
               options={{
                 presentation: 'card',
                 // gestureEnabled: false,
                 headerShown: true,
-                headerTitle: 'Edit Record',
+                headerTitle: 'readme',
                 headerTitleStyle: {
                   fontFamily: 'IBM-Regular',
                   color: Colors.primary600,
@@ -100,7 +100,7 @@ const RootLayout = () => {
                 },
                 headerTintColor: Colors.primary600,
               }}
-            /> */}
+            />
           </Stack>
         </RootSiblingParent>
       </ActionSheetProvider>

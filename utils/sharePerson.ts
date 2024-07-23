@@ -2,6 +2,7 @@ import * as Sharing from 'expo-sharing'
 import * as FileSystem from 'expo-file-system'
 import { extendedClient } from '@/myDBModule'
 import { Alert } from 'react-native'
+import { Person } from '@prisma/client/react-native'
 
 const sharePerson = async (personId: number) => {
   try {
@@ -10,8 +11,8 @@ const sharePerson = async (personId: number) => {
         id: personId,
       },
     })
-    const { id, ...dataWithoutId } = person
-    const jsonData = JSON.stringify(dataWithoutId)
+    const { id, ...dataWithoutId } = person as Person
+    const jsonData = JSON.stringify(person)
 
     const fileUri = FileSystem.documentDirectory + `${person!.name}.json`
     await FileSystem.writeAsStringAsync(fileUri, jsonData)

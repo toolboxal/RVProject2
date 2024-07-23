@@ -27,7 +27,11 @@
       ],
       "compatibleScreens": [
         {
-          "screenSize": ["small", "normal", "large"],
+          "screenSize": [
+            "small",
+            "normal",
+            "large"
+          ],
           "screenDensity": [
             "ldpi",
             "mdpi",
@@ -37,7 +41,8 @@
             "xxxhdpi"
           ]
         }
-      ]
+      ],
+      "package": "com.anonymous.RVProject2"
     },
     "web": {
       "bundler": "metro",

@@ -5,6 +5,7 @@ import { router } from 'expo-router'
 import uploadRecord from '@/utils/uploadRecord'
 import createBackup from '@/utils/createBackup'
 import restoreRecord from '@/utils/restoreBackup'
+import generatePDF from '@/utils/generatePDF'
 
 type TDropdownMenuProps = {
   handleMenuOpen: () => void
@@ -25,6 +26,9 @@ const DropdownMenu = ({
   }
   const handleRestore = async () => {
     await restoreRecord()
+  }
+  const handleGeneratePDF = async () => {
+    await generatePDF()
   }
 
   return (
@@ -62,6 +66,17 @@ const DropdownMenu = ({
         style={styles.optionBox}
         activeOpacity={0.9}
         onPress={() => {
+          handleGeneratePDF()
+          handleMenuOpen()
+        }}
+      >
+        <Text style={styles.optionText}>Generate pdf</Text>
+      </TouchableOpacity>
+      <View style={styles.divider}></View>
+      <TouchableOpacity
+        style={styles.optionBox}
+        activeOpacity={0.9}
+        onPress={() => {
           router.navigate('/readmePage')
           handleMenuOpen()
         }}
@@ -78,7 +93,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 30,
     right: 0,
-    borderRadius: 5,
+    borderRadius: 8,
     overflow: 'hidden',
     transform: [{ translateX: -50 }, { translateY: 20 }],
     opacity: 0.95,

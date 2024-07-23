@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     position: 'relative',
     marginHorizontal: 3,
+    maxHeight: 90,
+    overflow: 'hidden',
   },
   houseUnit: {
     fontFamily: 'IBM-SemiBoldItalic',
@@ -77,5 +79,7 @@ const styles = StyleSheet.create({
     fontFamily: 'IBM-Italic',
     fontSize: 16,
     color: Colors.primary900,
+    overflow: 'hidden',
+    maxHeight: 25,
   },
 })

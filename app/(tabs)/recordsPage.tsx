@@ -521,6 +521,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     position: 'relative',
+    marginBottom: 35,
   },
   remarksText: {
     fontFamily: 'IBM-Regular',
